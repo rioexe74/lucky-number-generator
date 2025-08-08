@@ -5,29 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Lucky Number Generator</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Poppins:wght@400;600;700&display=swap');
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         html {
             scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: #111;
             color: #fff;
             overflow-x: hidden;
+            background: linear-gradient(-45deg, #0e0e18, #110d2e, #2c0a37, #3d112d);
+            background-size: 400% 400%;
+            animation: animatedGradient 15s ease infinite;
         }
-        
+
         /* --- Hero Section (Top part of the page) --- */
         .hero-section {
             display: flex;
@@ -46,7 +48,7 @@
             left: 50%;
             width: 800px;
             height: 800px;
-            background: radial-gradient(circle, rgba(22, 163, 74, 0.25) 0%, rgba(22, 163, 74, 0) 60%);
+            background: radial-gradient(circle, rgba(192, 38, 211, 0.25) 0%, rgba(192, 38, 211, 0) 60%);
             transform: translate(-50%, -50%);
             z-index: 0;
             animation: pulse 5s infinite ease-in-out;
@@ -86,7 +88,13 @@
             0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
             50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
         }
-        
+
+        @keyframes animatedGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .container {
             text-align: center;
             max-width: 650px;
@@ -98,15 +106,15 @@
             -webkit-backdrop-filter: blur(10px);
             border-radius: 30px;
             padding: 40px;
-            border: 2px solid rgba(253, 224, 71, 0.2);
-            box-shadow: 0 0 40px rgba(22, 163, 74, 0.3), 0 0 60px rgba(0,0,0,0.7);
+            border: 2px solid rgba(236, 72, 153, 0.2);
+            box-shadow: 0 0 40px rgba(192, 38, 211, 0.3), 0 0 60px rgba(0,0,0,0.7);
         }
-        
+
         .header-icon {
             font-size: 2.5rem;
             margin-bottom: 15px;
-            color: #fde047; /* Gold */
-            text-shadow: 0 0 15px #fde047;
+            color: #ec4899; /* Hot Pink */
+            text-shadow: 0 0 15px #ec4899;
             animation: floatIcon 3s ease-in-out infinite;
         }
 
@@ -114,7 +122,7 @@
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
         }
-        
+
         .number-container {
             height: 8rem;
             display: flex;
@@ -122,38 +130,38 @@
             justify-content: center;
             margin-bottom: 25px;
         }
-        
+
         .main-number {
             font-family: 'Luckiest Guy', cursive;
             font-size: 8rem;
-            color: #fde047; /* Gold */
+            color: #fde047; /* Gold - Kept for lucky contrast */
             text-shadow: 0 0 10px #fde047, 0 0 25px #fde047, 0 0 5px #fff;
             line-height: 1;
             transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 1;
             transform: scale(1);
         }
-        
+
         .main-number.counting { transform: scale(0.95) rotate(-5deg); opacity: 0.8; }
         .main-number.final-zoom { transform: scale(1.1) rotate(0deg); opacity: 1; text-shadow: 3px 3px 8px rgba(0,0,0,0.5); }
         .main-text { font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; font-weight: 400; max-width: 550px; margin-left: auto; margin-right: auto; color: #e5e7eb; }
-        .main-text b { color: #fde047; font-weight: 700; }
-        
+        .main-text b { color: #ec4899; font-weight: 700; }
+
         .input-section { background: rgba(0, 0, 0, 0.3); border-radius: 15px; padding: 30px; margin-bottom: 30px; border: 1px solid rgba(255, 255, 255, 0.1); }
         .input-label { font-size: 1.1rem; margin-bottom: 15px; font-weight: 600; color: #fff; }
         .input-field { width: 100%; padding: 15px 20px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; background: rgba(0, 0, 0, 0.5); color: #fff; margin-bottom: 20px; outline: none; transition: all 0.3s ease; }
-        .input-field:focus { background: rgba(0,0,0,0.7); transform: translateY(-2px); box-shadow: 0 5px 20px rgba(22, 163, 74, 0.4); border-color: #16a34a; }
-        
-        .submit-btn { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #fff; border: none; padding: 15px 40px; font-size: 1.1rem; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; font-weight: 700; font-family: 'Poppins', sans-serif; box-shadow: 0 4px 20px rgba(22, 163, 74, 0.4), inset 0 -2px 5px rgba(0,0,0,0.3); text-transform: uppercase; letter-spacing: 1px; }
-        .submit-btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 8px 30px rgba(22, 163, 74, 0.6), inset 0 -2px 5px rgba(0,0,0,0.3); background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
-        
+        .input-field:focus { background: rgba(0,0,0,0.7); transform: translateY(-2px); box-shadow: 0 5px 20px rgba(192, 38, 211, 0.4); border-color: #c026d3; }
+
+        .submit-btn { background: linear-gradient(135deg, #c026d3 0%, #ec4899 100%); color: #fff; border: none; padding: 15px 40px; font-size: 1.1rem; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; font-weight: 700; font-family: 'Poppins', sans-serif; box-shadow: 0 4px 20px rgba(192, 38, 211, 0.4), inset 0 -2px 5px rgba(0,0,0,0.3); text-transform: uppercase; letter-spacing: 1px; }
+        .submit-btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 8px 30px rgba(192, 38, 211, 0.6), inset 0 -2px 5px rgba(0,0,0,0.3); background: linear-gradient(135deg, #d946ef 0%, #f472b6 100%); }
+
         .result-display { display: none; text-align: center; animation: fadeInUp 0.6s ease; }
         .result-display.show { display: block; }
         .profile-avatar { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 15px; background: #27272a; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fde047; box-shadow: 0 4px 15px rgba(0,0,0,0.5); object-fit: cover; overflow: hidden; border: 3px solid #fde047; }
         .profile-username { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; color: #e5e7eb; font-family: 'Poppins', sans-serif; }
         .user-lucky-number { font-family: 'Luckiest Guy', cursive; font-size: 3.5rem; font-weight: 700; color: #fde047; margin: 10px 0; text-shadow: 0 0 15px rgba(253, 224, 71, 0.7); }
         .user-lucky-text { font-size: 1rem; line-height: 1.5; color: #d1d5db; font-style: italic; margin-bottom: 25px; opacity: 0.9; }
-        
+
         .final-card-display { text-align: center; animation: fadeInUp 0.6s ease; }
         #displayedCardImage { max-width: 100%; width: 350px; height: auto; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); margin-bottom: 25px; transition: transform 0.3s ease; }
         #displayedCardImage:hover { transform: scale(1.05) rotate(2deg); }
@@ -163,14 +171,16 @@
 
         .action-button { background: linear-gradient(135deg, #fde047 0%, #f59e0b 100%); color: #422006; border: none; padding: 12px 30px; font-size: 1rem; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; font-weight: 700; font-family: 'Poppins', sans-serif; text-decoration: none; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
         .action-button:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0,0.6); background: linear-gradient(135deg, #fef08a 0%, #facc15 100%); }
-        .action-button.secondary { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: #fff; }
-        .action-button.secondary:hover { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
-        .action-button.final { background: linear-gradient(135deg, #4ade80 0%, #16a34a 100%); color: #fff; }
-        .action-button.final:hover { background: linear-gradient(135deg, #86efac 0%, #22c55e 100%); }
         
+        .action-button.secondary { background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%); color: #fff; }
+        .action-button.secondary:hover { background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%); }
+
+        .action-button.final { background: linear-gradient(135deg, #ec4899 0%, #d946ef 100%); color: #fff; }
+        .action-button.final:hover { background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%); }
+
         .loading-animation { display: none; text-align: center; padding: 30px; }
         .loading-animation.show { display: block; }
-        .loading-spinner { width: 50px; height: 50px; border: 4px solid rgba(255, 255, 255, 0.1); border-top-color: #fde047; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+        .loading-spinner { width: 50px; height: 50px; border: 4px solid rgba(255, 255, 255, 0.1); border-top-color: #ec4899; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
         .loading-text { font-size: 1rem; color: #e5e7eb; font-weight: 400; min-height: 1.1rem; margin-bottom: 15px;}
         .loading-countdown { font-family: 'Luckiest Guy', cursive; font-size: 3rem; font-weight: 700; color: #fde047; }
 
@@ -178,7 +188,7 @@
         .token-section { text-align: center; margin-top: 40px; max-width: 600px; width: 100%; }
         .token-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 1px; }
         .contract-address { font-family: 'monospace'; font-size: 0.9rem; color: #fde047; cursor: pointer; transition: all 0.3s ease; display: inline-block; padding: 10px 18px; border-radius: 8px; word-break: break-all; background: rgba(253, 224, 71, 0.1); border: 1px solid rgba(253, 224, 71, 0.2); }
-        .contract-address:hover { background: rgba(253, 224, 71, 0.2); transform: translateY(-2px); color: #fef08a; }
+        .contract-address:hover { background: rgba(192, 38, 211, 0.2); transform: translateY(-2px); color: #fef08a; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- Downloadable Card Styles --- */
@@ -189,7 +199,7 @@
             height: 650px;
             font-family: 'Poppins', sans-serif;
             color: #fff;
-            background-image: url('https://i.imgur.com/Q36A7aT.jpg'); /* Green felt with gold sparkle background */
+            background-image: url('https://i.imgur.com/eB3tG3A.jpg'); /* New vibrant, magical background */
             background-size: cover;
             background-position: center;
             border-radius: 25px;
@@ -199,14 +209,14 @@
             justify-content: center;
             align-items: center;
             padding: 30px;
-            border: 5px solid #b8860b; /* Dark Goldenrod Border */
+            border: 5px solid #a855f7; /* Deep Purple Border */
         }
 
         #cardContent {
             background: rgba(0,0,0,0.5);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(253, 224, 71, 0.2);
+            border: 1px solid rgba(236, 72, 153, 0.2);
             border-radius: 20px;
             padding: 25px;
             width: 100%;
@@ -251,7 +261,7 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
             margin-left: auto;
             margin-right: auto;
-            color: #4ade80; /* Bright Green */
+            color: #ec4899; /* Hot Pink */
         }
 
         #cardContractAddress { font-family: 'monospace'; font-size: 0.8rem; opacity: 0.8; margin-top: 15px; margin-bottom: 8px; text-shadow: 1px 1px 2px rgba(0,0,0,0.9); word-break: break-all; padding: 0 10px; }
@@ -259,9 +269,10 @@
         #cardFooter { font-size: 0.9rem; opacity: 0.9; letter-spacing: 1px; font-weight: 600; }
 
         /* --- Meme Section --- */
+        /* CHANGED: Swapped the plain black for a cohesive deep space purple */
         .meme-section {
             padding: 80px 20px;
-            background: #0a0a0a;
+            background: #0e0e18;
         }
 
         .meme-container {
@@ -311,7 +322,7 @@
             box-shadow: 0 8px 35px rgba(253, 224, 71, 0.2);
         }
 
-        /* --- Responsive Styles --- */
+        /* --- Responsive Styles (Unchanged) --- */
         @media (max-width: 768px) {
             .container { padding: 25px; }
             .number-container { height: 6rem; }
@@ -682,7 +693,7 @@
             navigator.clipboard.writeText(contractAddress).then(() => {
                 const originalText = addressElement.textContent;
                 addressElement.textContent = 'Copied! ✅';
-                addressElement.style.background = 'rgba(22, 163, 74, 0.4)';
+                addressElement.style.background = 'rgba(217, 70, 239, 0.4)';
                 addressElement.style.color = '#fff';
                 setTimeout(() => {
                     addressElement.textContent = originalText;
